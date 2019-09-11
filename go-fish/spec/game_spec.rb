@@ -24,26 +24,6 @@ describe 'GoFishGame' do
     end
   end
 
-  describe '#deal_cards_to_players' do
-    it 'puts 7 cards into the given players hand' do
-      game = GoFishGame.new("Jim", "Jansen")
-      game.start
-      game.deal_count
-      game.deal_cards
-      expect(game.players[0].hand.count).to eq 7
-      expect(game.card_deck.cards_left).to eq 38
-    end
-
-    it 'deals 5 cards into the given players hands' do
-      game = GoFishGame.new("Juliet", "James", "John")
-      game.start
-      game.deal_count
-      game.deal_cards
-      expect(game.players[0].hand.count).to eq 5
-      expect(game.card_deck.cards_left).to eq 37
-    end
-  end
-  
   describe '#deal_count' do
     it 'counts number of players in a game' do
       game = GoFishGame.new("Diana")
@@ -52,7 +32,33 @@ describe 'GoFishGame' do
     end
   end
 
-  it 'returns true if player1 gets an 8 from player3' do
+  describe '#add_cards_to_hand' do
+    it 'adds two cards to a given players hand' do
+      game = GoFishGame.new("Derrick")
+      card1 = PlayingCard.new("Jack", "Hearts")
+      card2 = PlayingCard.new("King", "Diamonds")
+      game.players[0].add_cards_to_hand(card1, card2)
+      expect(game.players[0].hand.count).to eq 2
+    end
+  end
 
+  describe '#deal_cards' do
+    it 'puts 7 cards into the 2 given players hands' do
+      game = GoFishGame.new("Jim", "Jansen")
+      game.start
+      game.deal_count
+      game.deal_cards
+      expect(game.players[0].hand.count).to eq 7
+      expect(game.card_deck.cards_left).to eq 38
+    end
+
+    it 'deals 5 cards into the 3 (or more) given players hands' do
+      game = GoFishGame.new("Juliet", "James", "John")
+      game.start
+      game.deal_count
+      game.deal_cards
+      expect(game.players[0].hand.count).to eq 5
+      expect(game.card_deck.cards_left).to eq 37
+    end
   end
 end

@@ -6,11 +6,12 @@ require_relative '../lib/playing_card'
 require 'pry'
 
 class GoFishPlayer
-  attr_reader :name, :hand
+  attr_reader :name, :hand, :completed_matches
 
   def initialize(name)
     @name = name
     @hand = []
+    @completed_matches = []
   end
 
   def remove_from_hand(rank)
@@ -30,6 +31,23 @@ class GoFishPlayer
 
   def add_cards_to_hand(*cards)
     cards.each {|card| hand.push(card)}
+  end
+
+  def card_rank_counter
+    card_rank_counter = Hash.new(0)
+    hand.each do |card|
+      card_rank_counter[card.rank] += 1
+    end
+    card_rank_counter
+  end
+
+  def count_matches_in_hand
+    card_rank_counter.each do |rank, cards|
+      if cards == 4
+        completed_matches.push(rank)
+        hand.delete(rank)
+      end
+    end
   end
 
   private
