@@ -4,18 +4,14 @@
 
 require_relative '../lib/room'
 require 'socket'
+require 'pry'
 
-# server = WarSocketServer.new
-# server.start
-# server.run
-class GoFishServer
-  attr_reader :connected_clients, :rooms, :games, :pending_clients, :server
+class GoFishSocketServer
+  attr_reader :rooms, :clients_in_lobby, :server
 
   def initialize
-    @connected_clients = Hash.new
     @rooms = Hash.new
-    @games = []
-    @pending_clients = []
+    @clients_in_lobby = []
   end
 
   def port_number
@@ -33,7 +29,8 @@ class GoFishServer
   def accept_new_client(player_name = "Player")
     client = server.accept_nonblock
     puts "Client connected"
-    pending_clients.push(client)
+    clients_in_lobby.push(client)
+    create_room_if_possible
   rescue IO::WaitReadable, Errno::EINTR
   end
   
@@ -43,12 +40,12 @@ class GoFishServer
     end
     @server.close if @server
   end
-  
-  def create_room
-    
-  end
 
-  def add_clients_to_room
-
+  def create_room_if_possible
+    if clients_in_lobby.count == 3
+      puts "Game of Go Fish created in a room with #{clients_in_lobby.count} players!"
+      room = GoFishGame.new
+      rooms[room] = clients_in_lobby.shift(3)
+    end
   end
 end

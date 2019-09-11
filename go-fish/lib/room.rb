@@ -5,6 +5,7 @@
 
 require_relative '../lib/player'
 require_relative  '../lib/game'
+require_relative '../lib/room_player'
 
 class GameRoom
   
@@ -17,11 +18,11 @@ class GameRoom
   end
 
   def create_game
-    game1 = GoFishGame.new
-    game1.start
-    connected_games[game1] = pending_clients.shift(2)
+    game = GoFishGame.new
+    game.start
+    connected_games[game] = pending_clients.shift(2)
     puts "Game of War Created!"
-    game1
+    game
   end
   
   def create_game_if_possible
