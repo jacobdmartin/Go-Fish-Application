@@ -17,10 +17,7 @@ class GoFishPlayer
   def remove_from_hand(rank)
     inquired_rank = []
     hand.each do |card| 
-      if card.value == value(rank)
-        inquired_rank.push(card)
-        hand.delete(card)
-      end
+      card.value == value(rank) ? inquired_rank.push(hand.delete(card)) : false
     end
     inquired_rank
   end
@@ -35,18 +32,13 @@ class GoFishPlayer
 
   def card_rank_counter
     card_rank_counter = Hash.new(0)
-    hand.each do |card|
-      card_rank_counter[card.rank] += 1
-    end
+    hand.each {|card| card_rank_counter[card.rank] += 1}
     card_rank_counter
   end
 
   def count_matches_in_hand
     card_rank_counter.each do |rank, cards|
-      if cards == 4
-        completed_matches.push(rank)
-        hand.delete(rank)
-      end
+      cards == 4 ? completed_matches.push(hand.delete(rank)) : false
     end
   end
 

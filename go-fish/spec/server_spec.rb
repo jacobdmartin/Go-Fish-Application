@@ -1,65 +1,52 @@
 require 'pry'
-class MockGoFishSocketClient
-  attr_reader :socket
-  attr_reader :output
-
-  def initialize(port)
-    @socket = TCPSocket.new('localhost', port)
-  end
-
-  def provide_input(text)
-    @socket.puts(text)
-  end
-
-  def capture_output(delay=0.1)
-    sleep(delay)
-    @output = @socket.read_nonblock(1000) # not gets which blocks
-  rescue IO::WaitReadable
-    @output = ""
-  end
-
-  def close
-    @socket.close if @socket
-  end
-end
 
 describe 'GoFishServer' do
 
   def create_two_clients 
-    @client1 = MockGoFishSocketClient.new(@server.port_number)
-    @pending_clients.push(@client1)
+    @client1 = MockGoFishClient.new(@server.port_number)
     @server.accept_new_client
-    @client2 = MockGoFishSocketClient.new(@server.port_number)
-    @pending_clients.push(@client2)
+    @client2 = MockGoFishClient.new(@server.port_number)
     @server.accept_new_client
   end
 
   def create_three_clients 
-    @client1 = MockGoFishSocketClient.new(@server.port_number)
-    @pending_clients.push(@client1)
+    @client1 = MockGoFishClient.new(@server.port_number)
     @server.accept_new_client
-    @client2 = MockGoFishSocketClient.new(@server.port_number)
-    @pending_clients.push(@client2)
+    @client2 = MockGoFishClient.new(@server.port_number)
     @server.accept_new_client
-    @client3 = MockGoFishSocketClient.new(@server.port_number)
-    @pending_clients.push(@client3)
+    @client3 = MockGoFishClient.new(@server.port_number)
     @server.accept_new_client
   end
 
   before(:each) do
-    @pending_clients = []
-    @server = GoFishSocketServer.new
+    @clients_in_lobby = []
+    @server = GoFishServer.new
   end
 
   after(:each) do
     @server.stop
-    @pending_clients.each do |client|
+    @clients_in_lobby.each do |client|
       client.close
     end
   end
 
   it "is not listening on a port before it is started"  do
-    expect {MockGoFishSocketClient.new(@server.port_number)}.to raise_error(Errno::ECONNREFUSED)
+    expect {MockGoFishClient.new(@server.port_number)}.to raise_error(Errno::ECONNREFUSED)
+  end
+
+  describe '#start' do
+    it 'returns true if the server starts' do
+      @server.start
+      expect(@server).to_not be_nil
+    end
+  end
+
+  describe '#stop' do
+    it 'returns true if the server stops' do
+      @server.start
+      @server.stop
+      expect(@server).to be_nil
+    end
   end
 
   describe '#accept_new_client' do
@@ -80,10 +67,18 @@ describe 'GoFishServer' do
     end
   end
   
-    it 'allows multiple rooms on one server' do
-      @server.start
-      create_three_clients
-      create_three_clients
-      expect(@server.rooms.length).to eq 2
-    end
+  it 'allows multiple rooms on one server' do
+    @server.start
+    create_three_clients
+    create_three_clients
+    expect(@server.rooms.count).to eq 2
+  end
+
+  it 'allows multiple rooms on one server and still contains people in the lobby' do
+    @server.start
+    create_three_clients
+    create_two_clients
+    expect(@server.rooms.count).to eq 1
+    expect(@server.clients_in_lobby.count).to eq 2
+  end
 end

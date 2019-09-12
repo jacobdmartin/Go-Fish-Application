@@ -10,14 +10,14 @@ class PlayingCard
   end
 
   def to_s 
-    "#{@rank} of #{suit}"
+    "#{rank} of #{suit}"
   end
 
   def value
-    return 11 if @rank == "Jack"
-    return 12 if @rank == "Queen"
-    return 13 if @rank == "King"
-    return 14 if @rank == "Ace"
-    @rank.to_i
+    return 11 if rank == "Jack"
+    return 12 if rank == "Queen"
+    return 13 if rank == "King"
+    return 14 if rank == "Ace"
+    rank.to_i
   end
 end

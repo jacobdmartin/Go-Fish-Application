@@ -3,11 +3,12 @@
 #assign clients to room
 
 require_relative '../lib/room'
+require_relative '../lib/room_player'
 require 'socket'
 require 'pry'
 
-class GoFishSocketServer
-  attr_reader :rooms, :clients_in_lobby, :server
+class GoFishServer
+  attr_reader :rooms, :clients_in_lobby, :server, :port_number, :ip_address
 
   def initialize
     @rooms = Hash.new
@@ -45,8 +46,9 @@ class GoFishSocketServer
   def create_room_if_possible
     if clients_in_lobby.count == 3
       puts "Game of Go Fish created in a room with #{clients_in_lobby.count} players!"
-      room = GameRoom.new(clients_in_lobby)
-      rooms[room] = clients_in_lobby.shift(3)
+      room_players = clients_in_lobby.each {|client| RoomPlayer.new(client)}
+      room = GameRoom.new(room_players)
+      rooms[room] = room_players.shift(3)
     end
   end
 end

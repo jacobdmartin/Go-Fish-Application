@@ -1,3 +1,4 @@
+#TSTTCPW (the simplest thing that can possibly work)
 #initialize: card deck, players
 #shuffle cards
 #deal cards
@@ -17,8 +18,6 @@ class GoFishGame
     @players = players_names.map {|player_name| GoFishPlayer.new(player_name)}
     @current_player = @players[0]
   end
-
-#TSTTCPW (the simplest thing that can possibly work)
 
   def start
     card_deck.shuffle
@@ -44,27 +43,41 @@ class GoFishGame
     card
   end
 
-  def inquire_for_card(inquiring_player, inquired_player, rank)
+  def result(inquiring_player, inquired_player, rank)
     result = GameResult.new(inquiring_player.name, inquired_player.name, rank)
+  end
+
+  def inquire_for_card(inquiring_player, inquired_player, rank)
     if inquiring_player.has_card?(rank) == false
-      result.player_results[:inquiring_player_no_rank_message]
+      inquiring_player_no_rank_outcome(inquiring_player, inquired_player, rank)
     elsif inquiring_player.has_card?(rank) && inquired_player.has_card?(rank)
-      inquiring_player.add_cards_to_hand(inquired_player.remove_from_hand(rank))
-      result.player_results[:inquring_player_take_rank_message]
+      both_have_rank_outcome(inquiring_player, inquired_player, rank)
     elsif inquired_player.has_card?(rank) == false
-      card = go_fish(inquiring_player)
-      fish_rank_asked_for(inquiring_player, inquired_player, card, rank)
+      inquired_player_no_rank_outcome(inquiring_player, inquired_player, rank)
     end
+  end
+  
+  def inquiring_player_no_rank_outcome(inquiring_player, inquired_player, rank)
+    result(inquiring_player, inquired_player, rank).player_results[:inquiring_player_no_rank_message]
+  end
+
+  def both_have_rank_outcome(inquiring_player, inquired_player, rank)
+    inquiring_player.add_cards_to_hand(inquired_player.remove_from_hand(rank))
+    result(inquiring_player, inquired_player, rank).player_results[:inquring_player_take_rank_message]
+  end
+
+  def inquired_player_no_rank_outcome(inquiring_player, inquired_player, rank)
+    card = go_fish(inquiring_player)
+    fish_rank_asked_for(inquiring_player, inquired_player, card, rank)
   end
 
   def fish_rank_asked_for(inquiring_player, inquired_player, card, rank)
-    result = GameResult.new(inquiring_player.name, inquired_player.name, rank)
     if card.rank == rank
-      result.player_results[:inquiring_player_fished_rank]
+      result(inquiring_player, inquired_player, rank).player_results[:inquiring_player_fished_rank]
       current_player = inquiring_player
     elsif card.rank != rank
       advance_player
-      result.player_results[:inquired_player_no_rank_message]
+      result(inquiring_player, inquired_player, rank).player_results[:inquired_player_no_rank_message]
     end
   end
 
@@ -75,12 +88,4 @@ class GoFishGame
       current_player = players[players.index(current_player + 1)]
     end
   end
-
-  # def current_player
-
-  # end
-
-  # def run
-  #   current_player = players[0]
-  # end
 end

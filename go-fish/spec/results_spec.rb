@@ -39,14 +39,13 @@ describe 'GameResults' do
       expect(game.inquire_for_card(game.players[0], game.players[1], "8")).to eq result.player_results[:inquired_player_no_rank_message]
     end
 
-    # it 'tells a given player to go again because they fished what they asked for' do
-    #   game = GoFishGame.new("Spain", "Meeker")
-    #   result = GameResult.new(game.players[0], game.players[1], "8")
-    #   initialize_four_cards
-    #   game.players[0].add_cards_to_hand(card1, card2)
-    #   game.players[1].add_cards_to_hand(card2, card3)
-    #   game.inquire_for_card(game.players[0], game.players[1], "8")
-    #   expect(game.go_fish()).to eq result.player_results[:inquiring_player_fished_rank]
-    # end
+    it 'tells a given player to go again because they fished what they asked for' do
+      @game = GoFishGame.new("Spain", "Meeker")
+      initialize_four_cards
+      result = GameResult.new(@game.players[0].name, @game.players[1].name, "8")
+      @game.players[0].add_cards_to_hand(@card1, @card2)
+      @game.players[1].add_cards_to_hand(@card2, @card3)
+      expect(@game.inquire_for_card(@game.players[0], @game.players[1], "8")).to eq result.player_results[:inquiring_player_fished_rank]
+    end
   end
 end
