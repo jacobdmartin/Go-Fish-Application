@@ -61,4 +61,71 @@ describe 'GoFishGame' do
       expect(game.card_deck.cards_left).to eq 37
     end
   end
+
+  describe '#go_fish' do
+    it 'tells a given player to go_fish' do
+      game = GoFishGame.new("Billy", "Joella")
+      game.start
+      game.deal_count
+      game.deal_cards
+      game.go_fish(game.players[0])
+      expect(game.players[0].hand.count).to eq 8
+      expect(game.card_deck.cards_left).to eq 37
+    end
+  end
+
+  describe '#inquire_for_card' do
+    it 'takes card from a given player and gives it to another given player' do
+      game = GoFishGame.new("Billy", "Jamie", "Jackson")
+      game.start
+      card1 = PlayingCard.new("Jack", "Hearts")
+      card2 = PlayingCard.new("Jack", "Diamonds")
+      card3 = PlayingCard.new("9", "Hearts")
+      game.players[0].add_cards_to_hand(card1, card3)
+      game.players[1].add_cards_to_hand(card2)
+      game.inquire_for_card(game.players[1], game.players[0], "Jack")
+      expect(game.players[0].hand.count).to eq 1
+      expect(game.players[1].hand.count).to eq 2
+    end
+
+    it 'a given player tells a player to go fish because they don\'t have a given rank' do
+      game = GoFishGame.new("Billy", "Jamie")
+      game.start
+      card1 = PlayingCard.new("Jack", "Hearts")
+      card2 = PlayingCard.new("Jack", "Diamonds")
+      card3 = PlayingCard.new("9", "Hearts")
+      game.players[0].add_cards_to_hand(card1, card3)
+      game.players[1].add_cards_to_hand(card2)
+      game.inquire_for_card(game.players[0], game.players[1], "9")
+      expect(game.players[0].hand.count).to eq 3
+      expect(game.players[1].hand.count).to eq 1
+    end
+
+    it 'a given player goes fishing and adds the card to their hand' do
+      game = GoFishGame.new("Billy", "Jamie")
+      game.start
+      card1 = PlayingCard.new("Jack", "Hearts")
+      card2 = PlayingCard.new("Jack", "Diamonds")
+      card3 = PlayingCard.new("9", "Hearts")
+      game.players[0].add_cards_to_hand(card1, card3)
+      game.players[1].add_cards_to_hand(card2)
+      game.inquire_for_card(game.players[0], game.players[1], "9")
+      expect(game.players[0].hand.count).to eq 3
+      expect(game.players[1].hand.count).to eq 1
+    end
+
+    describe '#advance_player' do
+      it 'goes to the next players turn' do
+        game = GoFishGame.new("Billy", "Jamie")
+        game.start
+        expect(game.advance_player).to eq(game.players[1])
+      end
+    end
+
+    describe '#fish_rank_asked_for' do
+      it 'tells a given player to take another turn because they fished what they asked for' do
+
+      end
+    end
+  end
 end

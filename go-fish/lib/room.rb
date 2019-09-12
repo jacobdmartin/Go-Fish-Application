@@ -9,15 +9,19 @@ require_relative '../lib/room_player'
 
 class GameRoom
   
-  def initialize
-    @room_players = []
+  def initialize(clients_from_lobby)
+    @room_players = RoomPlayer.new(clients_from_lobby)
   end
 
-  def with_four_people
-    
+  def run
+    Thread.new do
+      loop do
+
+      end
+    end
   end
 
-  def create_game
+  def start_game
     game = GoFishGame.new
     game.start
     connected_games[game] = pending_clients.shift(2)
@@ -30,6 +34,14 @@ class GameRoom
       create_game
     end
   end
+
+  # def process_input(room_player, message)
+  #   room_player.player == @game.current_player
+  # end
+
+  # def take_turn(player)
+  #   inquire_for_card()
+  # end
 
   # def ready_message(game)
   #   clients = connected_games[game]

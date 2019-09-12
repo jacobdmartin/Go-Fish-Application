@@ -29,6 +29,12 @@ describe 'GoFishPlayer' do
       expect(player.has_card?("4")).to eq true
       expect(player.has_card?("Ace")).to eq false
     end
+
+    it 'returns false if given player doesn\'t have given rank in hand' do
+      player = GoFishPlayer.new("Danny")
+      player.add_cards_to_hand(PlayingCard.new("5", "Clubs"))
+      expect(player.has_card?("King")).to eq false
+    end
   end
 
   describe '#add_cards_to_hand' do

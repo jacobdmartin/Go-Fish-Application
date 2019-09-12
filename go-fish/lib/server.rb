@@ -32,6 +32,7 @@ class GoFishSocketServer
     clients_in_lobby.push(client)
     create_room_if_possible
   rescue IO::WaitReadable, Errno::EINTR
+    accept_new_client
   end
   
   def stop
@@ -44,7 +45,7 @@ class GoFishSocketServer
   def create_room_if_possible
     if clients_in_lobby.count == 3
       puts "Game of Go Fish created in a room with #{clients_in_lobby.count} players!"
-      room = GoFishGame.new
+      room = GameRoom.new(clients_in_lobby)
       rooms[room] = clients_in_lobby.shift(3)
     end
   end

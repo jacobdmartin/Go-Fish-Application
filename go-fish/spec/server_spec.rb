@@ -28,22 +28,22 @@ describe 'GoFishServer' do
   def create_two_clients 
     @client1 = MockGoFishSocketClient.new(@server.port_number)
     @pending_clients.push(@client1)
-    @server.accept_new_client("Betty")
+    @server.accept_new_client
     @client2 = MockGoFishSocketClient.new(@server.port_number)
     @pending_clients.push(@client2)
-    @server.accept_new_client("Billy")
+    @server.accept_new_client
   end
 
   def create_three_clients 
     @client1 = MockGoFishSocketClient.new(@server.port_number)
     @pending_clients.push(@client1)
-    @server.accept_new_client("Betty")
+    @server.accept_new_client
     @client2 = MockGoFishSocketClient.new(@server.port_number)
     @pending_clients.push(@client2)
-    @server.accept_new_client("Billy")
+    @server.accept_new_client
     @client3 = MockGoFishSocketClient.new(@server.port_number)
     @pending_clients.push(@client3)
-    @server.accept_new_client("Bobby")
+    @server.accept_new_client
   end
 
   before(:each) do
