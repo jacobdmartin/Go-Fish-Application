@@ -8,7 +8,7 @@ require 'socket'
 require 'pry'
 
 class GoFishServer
-  attr_reader :rooms, :clients_in_lobby, :server, :port_number, :ip_address
+  attr_reader :rooms, :clients_in_lobby, :port_number, :ip_address, :server
 
   def initialize
     @rooms = Hash.new
@@ -26,9 +26,14 @@ class GoFishServer
   def start
     @server = TCPServer.new(ip_address, port_number)
   end
+
+  def closed?
+    @server.closed? unless @server.close
+  end
   
   def accept_new_client(player_name = "Player")
     client = server.accept_nonblock
+    client.puts "Welcome To The Server"
     puts "Client connected"
     clients_in_lobby.push(client)
     create_room_if_possible

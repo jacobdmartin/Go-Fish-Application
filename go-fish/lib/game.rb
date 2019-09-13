@@ -11,7 +11,7 @@ require_relative '../lib/results'
 require 'pry'
 
 class GoFishGame
-  attr_reader :card_deck, :players, :current_player
+  attr_reader :card_deck, :players, :current_player, :game
 
   def initialize(*players_names)
     @card_deck = CardDeck.new
@@ -43,42 +43,9 @@ class GoFishGame
     card
   end
 
-  def result(inquiring_player, inquired_player, rank)
-    result = GameResult.new(inquiring_player.name, inquired_player.name, rank)
-  end
-
   def inquire_for_card(inquiring_player, inquired_player, rank)
-    if inquiring_player.has_card?(rank) == false
-      inquiring_player_no_rank_outcome(inquiring_player, inquired_player, rank)
-    elsif inquiring_player.has_card?(rank) && inquired_player.has_card?(rank)
-      both_have_rank_outcome(inquiring_player, inquired_player, rank)
-    elsif inquired_player.has_card?(rank) == false
-      inquired_player_no_rank_outcome(inquiring_player, inquired_player, rank)
-    end
-  end
-  
-  def inquiring_player_no_rank_outcome(inquiring_player, inquired_player, rank)
-    result(inquiring_player, inquired_player, rank).player_results[:inquiring_player_no_rank_message]
-  end
-
-  def both_have_rank_outcome(inquiring_player, inquired_player, rank)
-    inquiring_player.add_cards_to_hand(inquired_player.remove_from_hand(rank))
-    result(inquiring_player, inquired_player, rank).player_results[:inquring_player_take_rank_message]
-  end
-
-  def inquired_player_no_rank_outcome(inquiring_player, inquired_player, rank)
-    card = go_fish(inquiring_player)
-    fish_rank_asked_for(inquiring_player, inquired_player, card, rank)
-  end
-
-  def fish_rank_asked_for(inquiring_player, inquired_player, card, rank)
-    if card.rank == rank
-      result(inquiring_player, inquired_player, rank).player_results[:inquiring_player_fished_rank]
-      current_player = inquiring_player
-    elsif card.rank != rank
-      advance_player
-      result(inquiring_player, inquired_player, rank).player_results[:inquired_player_no_rank_message]
-    end
+    result = GameResult.new(inquiring_player, inquired_player, rank, self)
+    result.turn_outcomes(inquiring_player, inquired_player, rank)
   end
 
   def advance_player

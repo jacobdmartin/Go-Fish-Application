@@ -78,18 +78,6 @@ describe 'GoFishGame' do
     end
   end
 
-  describe '#go_fish' do
-    it 'tells a given player to go_fish' do
-      game = GoFishGame.new("Billy", "Joella")
-      game.start
-      game.deal_count
-      game.deal_cards
-      game.go_fish(game.players[0])
-      expect(game.players[0].hand.count).to eq 8
-      expect(game.card_deck.cards_left).to eq 37
-    end
-  end
-
   describe '#result' do
     it 'receives and passes parameters of (inquiring_player, inquired_player, rank) into result' do
       initialize_new_game
@@ -102,14 +90,15 @@ describe 'GoFishGame' do
   end
 
   describe '#inquire_for_card' do
-    it 'takes card from a given player and gives it to another given player' do
-      initialize_new_game
-      initialize_three_cards
-      add_initialized_cards_to_both_hands
-      @game.inquire_for_card(@game.players[1], @game.players[0], "Jack")
-      expect(@game.players[0].hand.count).to eq 1
-      expect(@game.players[1].hand.count).to eq 2
-    end
+    # it 'takes card from a given player and gives it to another given player' do
+    #   initialize_new_game
+    #   initialize_three_cards
+    #   add_initialized_cards_to_both_hands
+    #   result = @game.inquire_for_card(@game.players[1], @game.players[0], "Jack")
+    #   expect(@game.players[0].hand.count).to eq 1
+    #   expect(@game.players[1].hand.count).to eq 2
+    #   expect(result.return_cards).to eq 2 
+    # end
 
     it 'a given player tells a player to go fish because they don\'t have a given rank' do
       initialize_new_game

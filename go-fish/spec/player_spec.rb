@@ -22,16 +22,13 @@ describe 'GoFishPlayer' do
 
   describe '#remove_from_hand' do
     it 'it removes and returns an array of cards matching a rank from a players hand' do
-      player = GoFishPlayer.new("Billy")
-      card1 = PlayingCard.new("4", "Hearts")
-      card2 = PlayingCard.new("7", "Hearts")
-      card3 = PlayingCard.new("4", "Spades")
-      player.add_cards_to_hand(card1)
-      player.add_cards_to_hand(card2)
-      player.add_cards_to_hand(card3)
-      matching_cards = player.remove_from_hand("4")
-      expect(player.hand).to eq [card2]
-      expect(matching_cards).to eq [card1, card3]
+      initialize_two_players
+      initialize_three_cards
+      @player1.add_cards_to_hand(@card1, @card2)
+      @player2.add_cards_to_hand(@card3)
+      matching_cards = @player1.remove_from_hand("3")
+      expect(@player1.hand).to eq [@card2]
+      expect(matching_cards).to eq [@card1]
     end
   end
 

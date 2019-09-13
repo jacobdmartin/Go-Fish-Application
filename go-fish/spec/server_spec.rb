@@ -45,7 +45,14 @@ describe 'GoFishServer' do
     it 'returns true if the server stops' do
       @server.start
       @server.stop
-      expect(@server).to be_nil
+      expect(@server.closed?).to eq true
+    end
+  end
+#what just broke, and why didn't the test catch
+#can I write a test to fix that
+  describe '#closed?' do
+    it 'makes sure my closed? method does not run if the server has not started' do
+      #to do
     end
   end
 
@@ -65,20 +72,20 @@ describe 'GoFishServer' do
       expect(@server.rooms.count).to eq 1
       expect(@server.clients_in_lobby.count).to eq 0
     end
-  end
   
-  it 'allows multiple rooms on one server' do
-    @server.start
-    create_three_clients
-    create_three_clients
-    expect(@server.rooms.count).to eq 2
-  end
+    it 'allows multiple rooms on one server' do
+      @server.start
+      create_three_clients
+      create_three_clients
+      expect(@server.rooms.count).to eq 2
+    end
 
-  it 'allows multiple rooms on one server and still contains people in the lobby' do
-    @server.start
-    create_three_clients
-    create_two_clients
-    expect(@server.rooms.count).to eq 1
-    expect(@server.clients_in_lobby.count).to eq 2
+    it 'allows multiple rooms on one server and still contains people in the lobby' do
+      @server.start
+      create_three_clients
+      create_two_clients
+      expect(@server.rooms.count).to eq 1
+      expect(@server.clients_in_lobby.count).to eq 2
+    end
   end
 end

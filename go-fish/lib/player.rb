@@ -17,7 +17,7 @@ class GoFishPlayer
   def remove_from_hand(rank)
     inquired_rank = []
     hand.each do |card| 
-      card.value == value(rank) ? inquired_rank.push(hand.delete(card)) : false
+      inquired_rank.push(hand.delete(card)) if card.value == value(rank)
     end
     inquired_rank
   end

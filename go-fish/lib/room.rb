@@ -8,6 +8,7 @@ require_relative  '../lib/game'
 require_relative '../lib/room_player'
 
 class GameRoom
+  attr_reader :room_players
   
   def initialize(room_player)
     @room_players = []
@@ -16,6 +17,7 @@ class GameRoom
   def start_game
     game = GoFishGame.new
     game.start
+    room_players.each {|player| player.puts "A Game of Go Fish Has Started"}
     return true
   end
   

@@ -2,6 +2,7 @@ require_relative '../lib/room'
 require_relative '../lib/game'
 require_relative '../lib/room_player'
 require_relative '../lib/server'
+require_relative '../lib/results'
 require 'socket'
 require 'pry'
 
@@ -52,6 +53,10 @@ describe 'GameRoom' do
     'localhost'
   end
 
+  # let(:client1) {MockGoFishClient.new(@server.port_number)}
+  # let(:client2) {MockGoFishClient.new(@server.port_number)}
+  # let(:client3) {MockGoFishClient.new(@server.port_number)}
+
   def initialize_three_players
     @client1 = MockGoFishClient.new(@server.port_number)
     @client2 = MockGoFishClient.new(@server.port_number)
@@ -80,28 +85,29 @@ describe 'GameRoom' do
       expect(clients_enter_ready?(@client1, @client2, @client3)).to eq true
     end
   end
+  
 
   describe '#play_round' do 
     it 'returns true if every player has had a turn, which completes the round' do
-
+      #to do
     end
   end
 
   describe '#play_game' do
     it 'returns true when a game has been played' do
-
+      #to do
     end
   end
 
   describe '#display_message_to_client' do
     it 'displays a given message to the client' do
-
+      #to do
     end
   end
 
   describe '#display_message_to_group' do
     it 'displays a given message to the group in the game' do
-
+      #to do
     end
   end
 end
