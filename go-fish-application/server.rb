@@ -2,8 +2,8 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sprockets'
 require 'sass'
-require_relative 'lib/game'
-require_relative 'lib/player'
+# require_relative 'lib/game'
+# require_relative 'lib/player'
 
 class Server < Sinatra::Base
   configure :development do 
@@ -19,12 +19,12 @@ class Server < Sinatra::Base
     settings.environment.call(env)
   end
   
-  def self.game do
+  def self.game
     @@game || Game.new
   end 
 
   get '/' do
-    slim :index
+    slim :log_in
   end
 
   post '/join' do
@@ -36,6 +36,6 @@ class Server < Sinatra::Base
 
   get '/game' do
     redirect '/' if self.class.game.empty?
-    slim :game, locals: {game = self.class.game, current_player = sessions[:current_player]}
+    slim :game, locals: {game: self.class.game, current_player: sessions[:current_player]}
   end
 end
