@@ -3,7 +3,7 @@ require 'rspec'
 require 'capybara'
 require 'capybara/dsl'
 ENV['RACK_ENV'] = 'test'
-require './server'
+require_relative '../../server'
 
 RSpec.describe Server do
   include Capybara::DSL
