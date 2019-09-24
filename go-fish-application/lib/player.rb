@@ -1,9 +1,3 @@
-# class Player
-#   attr_reader :name
-#   def initilialize(name)
-#     @name = name
-#   end
-# end
 class Player
   attr_reader :name, :hand, :completed_matches
 

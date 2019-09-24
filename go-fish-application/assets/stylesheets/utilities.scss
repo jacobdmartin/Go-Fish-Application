@@ -21,7 +21,7 @@
 .items_stretch {align-items: stretch;}
 
 body {
-  height: 100%-80px;
+  height: calc(100% - 80px);
   width: auto;
   margin: auto;
   font: 12pt Helvetica, sans-serif;
@@ -87,6 +87,6 @@ container {
 }
 
 .page {
-  height: (100% - 80px)
+  height: calc(100% - 80px);
   overflow: scroll;
 }

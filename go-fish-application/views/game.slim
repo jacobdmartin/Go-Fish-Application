@@ -1,4 +1,8 @@
 h1 Players
 ul.player-list
-  -game.players.each do |player|
-    li.player-list = player.name
+  - game.players.each do |player|
+    li.player-list
+      - if current_player.name == player.name
+        b = player.name
+      - else
+        = player.name

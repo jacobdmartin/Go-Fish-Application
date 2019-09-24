@@ -1,3 +1,4 @@
+
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sprockets'
@@ -7,6 +8,7 @@ require_relative 'lib/game'
 require_relative 'lib/player'
 
 class Server < Sinatra::Base
+
   configure :development do 
     register Sinatra::Reloader
   end
@@ -28,7 +30,7 @@ class Server < Sinatra::Base
     slim :log_in
   end
 
-  post '/join' do
+  post '/login' do
     player = Player.new(params['name'])
     session[:current_player] = player
     self.class.game.add_player(player)
