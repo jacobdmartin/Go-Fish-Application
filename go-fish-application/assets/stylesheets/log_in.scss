@@ -5,14 +5,6 @@
   font-size: 20px;
 }
 
-img {
-  max-width: 320px;
-  position: relative;
-  margin: auto;
-  top: 25%;
-  box-shadow: 10px 10px 5px rgb(34, 34, 34);
-}
-
 .welcome {
   position: relative;
   top: 70%;
@@ -26,7 +18,7 @@ img {
 .username_box {
   position: relative;
   background-color: #ffda55;
-  margin-top: 65px;
+  margin-top: 55px;
   box-shadow: 3px 3px 4px rgb(34, 34, 34)
 }
 
@@ -38,7 +30,7 @@ img {
   position: relative;
   margin: auto;
   padding: 5px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .log_in_button_text {
@@ -49,4 +41,12 @@ img {
   height: 50px;
   left: 110px;
   font-size: 20px;
+}
+
+.card_picture {
+  max-width: 320px;
+  position: relative;
+  top: 25%;
+  margin-left: calc(50% - 160px);
+  box-shadow: 3px 3px 4px rgb(34, 34, 34)
 }
