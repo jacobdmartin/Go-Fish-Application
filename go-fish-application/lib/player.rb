@@ -23,13 +23,13 @@ class Player
     cards.each {|card| hand.push(card)}
   end
 
-  def card_rank_counter
-    card_rank_counter = Hash.new(0)
-    hand.each {|card| card_rank_counter[card.rank] += 1}
-    card_rank_counter
+  def add_players_cards_to_hand(cards)
+    cards.each {|card| hand.push(card)}
   end
 
-  def count_matches_in_hand
+  def count_matches_in_hand(rank)
+    card_rank_counter = Hash.new(0)
+    hand.each {|card| card_rank_counter[card.rank] += 1}
     card_rank_counter.each do |rank, cards|
       cards == 4 ? completed_matches.push(hand.delete(rank)) : false
     end

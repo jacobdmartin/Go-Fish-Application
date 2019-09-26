@@ -9,8 +9,16 @@ class PlayingCard
     @suit = suit
   end
 
-  def to_s 
-    "#{rank} of #{suit}"
+  def to_s
+    "/images/cards/#{image_name}"
+  end
+
+  def image_name
+    if rank == "10"
+    "#{rank}#{suit[0]}"
+    else
+      "#{rank[0]}#{suit[0]}"
+    end
   end
 
   def value

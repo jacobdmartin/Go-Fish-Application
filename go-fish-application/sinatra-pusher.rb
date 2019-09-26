@@ -1,7 +1,7 @@
 require 'bundler'
 Bundler.require
 
-class SinatraPusher < Sinatra::Base
+class Server < Sinatra::Base
   configure do
     register Sinatra::Reloader
     Pusher.app_id = ''
@@ -10,7 +10,7 @@ class SinatraPusher < Sinatra::Base
   end
 
   get '/' do
-    erb :index
+    slim :log_in
   end
 
   post '/messages' do

@@ -30,7 +30,8 @@ body {
 }
 
 img.card_image {
-  max-width: 100%;
+  max-width: 10%;
+  border-radius: 10px;
 }
 
 .btn {
@@ -94,4 +95,42 @@ container {
 .page {
   height: calc(100% - 80px);
   overflow: scroll;
+}
+
+.matches-header {
+  height: 30px;
+  background-color: #483302;
+  box-shadow: 4px 4px 4px rgb(34, 34, 34);
+  margin: 0px;
+}
+
+.result_message {
+  max-width: 75%;
+  height: 70px;
+  border-radius: 20px;
+  padding-left: 7px;
+  position: relative;
+  left: 12.5%;
+  top: 110px;
+  background-color: #ffda55;
+  border: 2px #553d03 solid;
+  align-items: center;
+}
+
+.card-pile {
+  max-width: 150px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.stats {
+  width: 150px;
+  height: 170px;
+  background-color: #553d03;
+  color: white;
+  padding: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  box-shadow: 4px 4px 4px rgb(34, 34, 34);
 }

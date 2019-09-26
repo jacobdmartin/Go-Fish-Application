@@ -96,3 +96,125 @@ body {
   font-size: 20px;
   color: white;
 }
+
+/* making a popup box using CSS */
+
+.button {
+  position: fixed;
+  left: 42%;
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid black;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: black;
+}
+
+.card-btn {
+  width: 70px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  box-shadow: 3px 3px 4px rgb(34, 34, 34);
+  border: 1px black solid;
+}
+
+.card-btn:hover {
+  background-color: rgb(228, 228, 228);
+}
+
+.card-list-item {
+  text-align: center;
+}
+
+.player-btn {
+  width: 70px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: rgb(148, 133, 133);
+  box-shadow: 3px 3px 4px rgb(34, 34, 34);
+  border: 1px black solid;
+}
+
+.player-btn:hover {
+  background-color: rgb(121, 106, 106);
+}
+
+.ask-btn {
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: #d7b747;
+  font-size: 20px;
+  box-shadow: 3px 3px 4px rgb(34, 34, 34);
+  border: 1px black solid;
+}
+
+.ask-btn:hover {
+  background-color: #ffda55;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  color: #ffda55;
+  margin: 70px auto;
+  padding: 20px;
+  background: rgba(58, 150, 107, 0.776);
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 2s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: black;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+}
+.popup .close:hover {
+  color: rgb(216, 6, 6);
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}

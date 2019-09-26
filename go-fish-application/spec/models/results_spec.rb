@@ -30,7 +30,6 @@ describe 'GameResults' do
 
     it 'returns a message if a round results in a given player asking for a rank they don\'t have' do
       game = Game.new("Andrew", "Garfield")
-      result = GameResult.new(game.players[0].name, game.players[1].name, "Ace", game)
       game.players[0].add_cards_to_hand(five_of_clubs, eight_of_diamonds)
       game.players[1].add_cards_to_hand(five_of_spades, queen_of_hearts)
       game.inquire_for_card(game.players[0], game.players[1], "Ace")

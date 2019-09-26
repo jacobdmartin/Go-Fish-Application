@@ -6,10 +6,12 @@ require 'pry'
 
 class Game
   attr_reader :card_deck, :players
+  attr_accessor :current_player, :started, :results
 
   def initialize(*players_names)
     @card_deck = CardDeck.new
     @players = players_names.map {|player_name| Player.new(player_name)}
+    @started = false
   end
 
   def add_player(player)
@@ -26,18 +28,17 @@ class Game
   end
 
   def start
-    if @players.count == 2
+    if players.count > 1
       card_deck.shuffle
+      deal_count
       deal_cards
+      self.current_player = @players[0]
+      self.started = true
     end
   end 
 
   def deal_count
     players.count >= 3 ? 5 : 7
-  end
-
-  def add_cards_to_hand(*cards)
-    cards.each {|card| hand.push(card)}
   end
 
   def deal_cards
@@ -54,7 +55,11 @@ class Game
 
   def inquire_for_card(inquiring_player, inquired_player, rank)
     result = GameResult.new(inquiring_player, inquired_player, rank, self)
-    result.turn_outcomes(inquiring_player, inquired_player, rank)
+    self.results = result.turn_outcomes(inquiring_player, inquired_player, rank)
+  end
+
+  def add_players_card_to_hand(*cards)
+    cards.each {|card| hand.push(card)}
   end
 
   def advance_player

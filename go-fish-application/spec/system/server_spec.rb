@@ -58,4 +58,18 @@ RSpec.describe Server do
     expect(session2).to have_content('Player 1')
     expect(session1).to have_content('Player 2')
   end
+
+  it 'receives a player and outputs the popup' do
+    session1 = Capybara::Session.new(:selenium_chrome_headless, Server.new)
+    session2 = Capybara::Session.new(:selenium_chrome_headless, Server.new)
+
+    [ session1, session2 ].each_with_index do |session, index|
+      player_name = "Player #{index + 1}"
+      session.visit '/'
+      session.fill_in :name, with: player_name
+      session.click_on 'Login'
+      expect(session).to have_content('Game')
+      expect(session).to have_content("Your Turn")
+    end
+  end
 end

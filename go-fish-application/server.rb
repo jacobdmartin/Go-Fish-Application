@@ -6,6 +6,7 @@ require 'sass'
 require 'pry'
 require_relative 'lib/game'
 require_relative 'lib/player'
+require_relative 'sinatra-pusher'
 require 'webdrivers'
 require 'pusher'
 
@@ -13,7 +14,9 @@ class Server < Sinatra::Base
 
   configure :development do 
     register Sinatra::Reloader
-    Server.app_file = ''
+    Pusher.app_id = 'game'
+    Pusher.key = ''
+    Pusher.secret = ''
   end
   enable :sessions
   set :environment, Sprockets::Environment.new
@@ -38,7 +41,7 @@ class Server < Sinatra::Base
   end
 
   post '/login' do
-    player = Player.new(params['name'])
+    player = Player.new(params[:name])
     session[:current_player] = player.name
     self.class.game.add_player(player)
     redirect '/game'
@@ -48,5 +51,13 @@ class Server < Sinatra::Base
     redirect '/' if self.class.game.empty?
     current_player = self.class.game.find_current_player(session[:current_player])
     slim :game, locals: {game: self.class.game, current_player: current_player}
+  end
+
+  post '/ask' do
+    asking_player = self.class.game.find_current_player(session[:current_player])
+    requested_rank = params[:rank]
+    requested_player = self.class.game.find_current_player(params[:player])
+    self.class.game.inquire_for_card(asking_player, requested_player, requested_rank)
+    redirect '/game'
   end
 end

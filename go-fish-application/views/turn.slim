@@ -1,0 +1,6 @@
+form action="/submit-turn" method="post"
+  - current_player.hand.each do |card|
+    input type="radio" name="card" value="#{card.rank} of #{card.suit}" #{card.rank} of #{card.suit} 
+  - game.players.each do |player|
+    input type="radio" name="#{player}" value="Ask-Player"
+  .btn.log_in
