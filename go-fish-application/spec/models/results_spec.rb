@@ -10,6 +10,7 @@ describe 'GameResults' do
   let(:five_of_spades) {PlayingCard.new("5", "Spades")}
   let(:queen_of_hearts) {PlayingCard.new("Queen", "Hearts")}
   let(:ace_of_diamonds) {PlayingCard.new("Ace", "Diamonds")}
+  let(:five_of_diamonds) {PlayingCard.new("5", "Diamonds")}
 
   describe '#go_fish' do
     it 'tells a given player to go_fish' do
@@ -28,22 +29,33 @@ describe 'GameResults' do
     #   @game.
     # end
 
-    it 'returns a message if a round results in a given player asking for a rank they don\'t have' do
-      game = Game.new("Andrew", "Garfield")
-      game.players[0].add_cards_to_hand(five_of_clubs, eight_of_diamonds)
-      game.players[1].add_cards_to_hand(five_of_spades, queen_of_hearts)
-      game.inquire_for_card(game.players[0], game.players[1], "Ace")
-      expect(result.turn_outcomes(game.players[0], game.players[1], "Ace")).to eq result.player_results[:inquiring_player_no_rank_message]
-    end
+    # it 'returns a message if a round results in a given player asking for a rank they don\'t have' do
+    #   game = Game.new("Andrew", "Garfield")
+    #   game.players[0].add_cards_to_hand(five_of_clubs, eight_of_diamonds)
+    #   game.players[1].add_cards_to_hand(five_of_spades, queen_of_hearts)
+    #   game.inquire_for_card(game.players[0], game.players[1], "Ace")
+    #   expect(result.turn_outcomes(game.players[0], game.players[1], "Ace")).to eq result.player_results[:inquiring_player_no_rank_message]
+    # end
 
     it 'returns a message if a round results in a given player having to go fish' do
       game = Game.new("Matt", "Damon")
-      result = GameResult.new(game.players[0].name, game.players[1].name, "8", game)
+      result = GameResult.new(game.players[0], game.players[1], "8", game)
       game.players[0].add_cards_to_hand(five_of_clubs, eight_of_diamonds)
       game.players[1].add_cards_to_hand(five_of_spades, queen_of_hearts)
       game.inquire_for_card(game.players[0], game.players[1], "8")
       expect(result.turn_outcomes(game.players[0], game.players[1], "8")).to eq result.player_results[:inquired_player_no_rank_message]
     end
+
+    # it 'gives a player two fives because they asked for fives' do
+    #   game = Game.new("Chris", "Evans")
+    #   result = GameResult.new(game.players[0], game.players[1], "5", game)
+    #   game.players[0].add_cards_to_hand(five_of_clubs, eight_of_diamonds)
+    #   game.players[1].add_cards_to_hand(five_of_spades, five_of_diamonds, queen_of_hearts)
+    #   game.inquire_for_card(game.players[0], game.players[1], "5")
+    #   game.players[0].hand_rank_counter
+    #   # expect(result.turn_outcomes(game.players[0], game.players[1], "5")).to eq result.player_results[:inquring_player_take_rank_message]
+    #   expect(game.players[0].hand_rank_counter[:"5"]).to eq 4
+    # end
 
     # it 'returns a message if a given player gets to go again because they fished what they asked for' do
     #   @game = GoFishGame.new("Spain", "Meeker")

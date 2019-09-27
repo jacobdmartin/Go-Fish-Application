@@ -12,6 +12,7 @@ class Game
     @card_deck = CardDeck.new
     @players = players_names.map {|player_name| Player.new(player_name)}
     @started = false
+    @current_player = players[0]
   end
 
   def add_player(player)
@@ -63,10 +64,10 @@ class Game
   end
 
   def advance_player
-    if current_player = players.last
-      current_player
+    if current_player == players.last
+      self.current_player = players[0]
     else
-      current_player = players[players.index(current_player + 1)]
+      self.current_player = players[players.index(current_player)+ 1]
     end
   end
 end

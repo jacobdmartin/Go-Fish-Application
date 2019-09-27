@@ -7,16 +7,12 @@ class Player
     @completed_matches = []
   end
 
-  def remove_from_hand(rank)
-    inquired_rank = []
-    hand.each do |card| 
-      inquired_rank.push(hand.delete(card)) if card.value == value(rank)
-    end
-    inquired_rank
-  end
-
   def has_card?(rank)
     hand.map(&:rank).include?(rank)
+  end
+
+  def unique_ranks
+    @hand.map{|card| card.rank}.uniq
   end
 
   def add_cards_to_hand(*cards)
@@ -27,11 +23,30 @@ class Player
     cards.each {|card| hand.push(card)}
   end
 
+  def hand_rank_counter
+    hand_rank_counter = Hash.new(0)
+    hand.each {|card| hand_rank_counter[card.rank] += 1}
+    hand_rank_counter
+  end
+
+  def remove_from_hand(given_rank)
+    inquired_rank_arr = []
+    hand.each do |card|
+      if card.rank == given_rank
+        inquired_rank_arr.push(hand.delete(card))
+      end
+    end
+    inquired_rank_arr
+  end
+
   def count_matches_in_hand(rank)
     card_rank_counter = Hash.new(0)
     hand.each {|card| card_rank_counter[card.rank] += 1}
     card_rank_counter.each do |rank, cards|
-      cards == 4 ? completed_matches.push(hand.delete(rank)) : false
+      if cards == 4
+        remove_from_hand(rank)
+        completed_matches.push(rank)
+      end
     end
   end
 

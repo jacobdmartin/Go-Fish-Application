@@ -13,9 +13,4 @@ describe 'PlayingCard' do
     expect(card.value).to eq 11
     expect(card2.value).to eq 12
   end
-
-  it 'returns true if player1 card equals the correct output string' do
-    player1_card = PlayingCard.new("7", "Clubs")
-    expect(player1_card.to_s).to eq("7 of Clubs")
-  end
 end

@@ -34,7 +34,7 @@ body {
   height: 50%;
   max-width: 237px;
   margin: auto;
-  box-shadow: 3px 3px 4px rgb(34, 34, 34)
+  box-shadow: 3px 3px 4px rgb(34, 34, 34);
 }
 
 .dropbtn {
@@ -100,19 +100,21 @@ body {
 /* making a popup box using CSS */
 
 .button {
-  position: fixed;
+  position: absolute;
   left: 42%;
+  top: 50%;
   font-size: 1em;
   padding: 10px;
-  color: #fff;
-  border: 2px solid black;
+  color: #00bf63;
+  border: 2px solid #ffda55;
+  background: #553d03;
   border-radius: 20px/50px;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease-out;
 }
 .button:hover {
-  background: black;
+  background: #855f07;
 }
 
 .card-btn {

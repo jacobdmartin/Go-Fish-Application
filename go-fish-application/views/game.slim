@@ -8,26 +8,30 @@ section
           - game.players.each do |player|
             li class="flex player-text dropbtn" 
               - if current_player.name == player.name
-                b = player.name
+                b = "#{player.name} #{player.hand.count}"
               - else
-                = player.name
-                div class="dropdown-content"
-                  p Cards: #{player.hand.count}
-                  p Books: #{player.completed_matches.count}
+                = "#{player.name} #{player.hand.count}"
     .flex.flex_column
       img.card-pile src="/images/cards/49319355-playing-cards-back.jpeg" alt="Picture of the back of a card"
+      p.deck_stats = "Cards Left In Deck: #{game.card_deck.cards_left}"
     .flex.flex_column.stats-header
       p.matches-header = "Matches:"
       .stats
         - game.players.each do |player|
           li.flex.player-stats 
             = "#{player.name}: #{player.completed_matches.count}"
-  .flex.game-footer.hand-button
-    - current_player.hand.each do |card|
-      img class="card_image" src="/images/cards/#{card.image_name}.jpg" alt="#{card.to_s}"
   - if game.started
     .flex.result_message
       p = game.results
+    .flex.flex_row
+      .hand-column
+        p.matches-header = "Your Cards:"
+      - current_player.hand.each do |card|
+        img class="card_image" src="/images/cards/#{card.image_name}.jpg" alt="#{card.to_s}"
+      .book-column
+        p.matches-header = "Your Matches:"
+      - current_player.completed_matches.each do |card|
+        img class="card_image" src="/images/cards/#{card.image_name}.jpg" alt="#{card.to_s}"
     - if current_player.name == game.current_player.name
       a.button href="#popup1" Click To Take Turn
       div id="popup1" class="overlay"
@@ -37,12 +41,27 @@ section
           .content
             form action="/ask" method="post"
               p Choose A Card To Ask For
-              - current_player.hand.each do |card|
+              - current_player.unique_ranks.each do |rank|
                 .card-item.card-btn
-                  input class="card-list-item" type="radio" name="rank" value="#{card.rank}"
-                  label for="rank" #{card.rank}
+                  input class="card-list-item" type="radio" name="rank" value="#{rank}"
+                  label for="rank" #{rank}
               p Choose A Player To Ask
               - game.players.each do |player|
-                .player-btn
-                  input class="player-list-item" type="radio" name="player" value="#{player.name}" #{player.name}
-              button class="ask-btn" type="submit" Ask
+                - if current_player.name == player.name
+                  = 
+                - else
+                  .player-btn
+                    input class="player-list-item" type="radio" name="player" value="#{player.name}" #{player.name}
+                  button class="ask-btn" type="submit" Ask
+    / - if game.completed_matches == 13
+    /   a.button href="#win-popup" Click To Take Turn
+      / div id="win-popup" class="overlay"
+      /   .popup
+      /     h2 Game Results:
+      /     a.close href="#" &times;
+      /     .content
+      /       .flex.flex_row
+      /         .flex.flex_column
+      /           ul Players
+      /           - game.players.each do |player|
+      /             li "#{player.name} Matches: #{game.player.completed_matches.count}" 

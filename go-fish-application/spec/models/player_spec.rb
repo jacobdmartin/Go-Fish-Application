@@ -1,6 +1,13 @@
 require_relative '../../lib/player'
 
 describe 'Player' do
+  let(:five_of_clubs) {PlayingCard.new("5", "Clubs")}
+  let(:eight_of_diamonds) {PlayingCard.new("8", "Diamonds")}
+  let(:five_of_spades) {PlayingCard.new("5", "Spades")}
+  let(:queen_of_hearts) {PlayingCard.new("Queen", "Hearts")}
+  let(:ace_of_diamonds) {PlayingCard.new("Ace", "Diamonds")}
+  let(:five_of_diamonds) {PlayingCard.new("5", "Diamonds")}
+
   def initialize_two_players
     @player1 = Player.new("Mike")
     @player2 = Player.new("Joel")
@@ -20,17 +27,17 @@ describe 'Player' do
     @card3 = PlayingCard.new("3", "Spades")
   end
 
-  describe '#remove_from_hand' do
-    it 'it removes and returns an array of cards matching a rank from a players hand' do
-      initialize_two_players
-      initialize_three_cards
-      @player1.add_cards_to_hand(@card1, @card2)
-      @player2.add_cards_to_hand(@card3)
-      matching_cards = @player1.remove_from_hand("3")
-      expect(@player1.hand).to eq [@card2]
-      expect(matching_cards).to eq [@card1]
-    end
-  end
+  # describe '#remove_from_hand' do
+  #   it 'it removes and returns an array of cards matching a rank from a players hand' do
+  #     initialize_two_players
+  #     initialize_three_cards
+  #     @player1.add_cards_to_hand(@card1, @card2)
+  #     @player2.add_cards_to_hand(@card3)
+  #     matching_cards = @player1.remove_from_hand("3")
+  #     expect(@player1.hand).to eq [@card2]
+  #     expect(matching_cards).to eq [@card1]
+  #   end
+  # end
 
   describe '#has_card?' do
     it 'returns a true if the player has the given rank in their hand' do
@@ -59,12 +66,12 @@ describe 'Player' do
   end
 
   describe '#card_rank_counter' do
-    it 'counts how many cards with each rank a player has' do
-      player = Player.new("Jack")
-      initialize_three_cards
-      player.add_cards_to_hand(@card1, @card2, @card3)
-      player.card_rank_counter
-      expect(player.card_rank_counter.count).to eq 2
+    it 'gives a player two fives because they asked for fives' do
+      game = Game.new("Chris", "Evans")
+      game.players[0].add_cards_to_hand(five_of_clubs, eight_of_diamonds)
+      game.players[1].add_cards_to_hand(five_of_spades, five_of_diamonds, queen_of_hearts)
+      game.players[0].count_matches_in_hand(five_of_clubs.rank)
+      expect(game.players[0].hand.count).to eq 4
     end
   end
 
@@ -73,7 +80,7 @@ describe 'Player' do
       player = Player.new("Jack")
       initialize_a_match_of_four
       player.add_cards_to_hand(@card1, @card2, @card3, @card4, @card5)
-      player.count_matches_in_hand
+      player.count_matches_in_hand(@card1.rank)
       expect(player.completed_matches.count).to eq 1
     end
   end
