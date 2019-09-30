@@ -9,7 +9,7 @@ require_relative '../lib/game'
 #give me a summary for player 3
 
 class GameResult
-  attr_reader :player_results, :game
+  attr_reader :game
   attr_accessor :player_results 
 
   def initialize(inquiring_player, inquired_player, rank, game)

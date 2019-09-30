@@ -5,8 +5,8 @@ require_relative '../lib/results'
 require 'pry'
 
 class Game
-  attr_reader :card_deck, :players
-  attr_accessor :current_player, :started, :results
+  attr_reader :card_deck
+  attr_accessor :current_player, :started, :results, :players
 
   def initialize(*players_names)
     @card_deck = CardDeck.new

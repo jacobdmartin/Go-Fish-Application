@@ -44,12 +44,10 @@ section
               - current_player.unique_ranks.each do |rank|
                 .card-item.card-btn
                   input class="card-list-item" type="radio" name="rank" value="#{rank}"
-                  label for="rank" #{rank}
+                  button type="submit" class="card-list-item" type="radio" name="rank" value="#{rank}"
               p Choose A Player To Ask
               - game.players.each do |player|
-                - if current_player.name == player.name
-                  = 
-                - else
+                - if current_player.name != player.name
                   .player-btn
                     input class="player-list-item" type="radio" name="player" value="#{player.name}" #{player.name}
                   button class="ask-btn" type="submit" Ask

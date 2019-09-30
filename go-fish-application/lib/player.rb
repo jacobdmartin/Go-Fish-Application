@@ -1,5 +1,5 @@
 class Player
-  attr_reader :name, :hand, :completed_matches
+  attr_accessor :name, :hand, :completed_matches
 
   def initialize(name)
     @name = name
@@ -30,11 +30,11 @@ class Player
   end
 
   def remove_from_hand(given_rank)
-    inquired_rank_arr = []
-    hand.each do |card|
-      if card.rank == given_rank
-        inquired_rank_arr.push(hand.delete(card))
-      end
+    inquired_rank_arr = hand.select do |card|
+      card.rank == given_rank
+    end
+    hand.delete_if do |card|
+      card.rank == given_rank
     end
     inquired_rank_arr
   end
